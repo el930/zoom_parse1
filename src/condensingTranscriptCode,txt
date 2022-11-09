@@ -1,0 +1,50 @@
+// adding people to condensedPeople ArrayList
+        ArrayList <CondensedPerson> condensedPeople= new ArrayList<>();
+        for (int i = 0; i < pplName.size(); i++) {
+            condensedPeople.add(new CondensedPerson(pplName.get(i)));
+        }
+
+
+        String[] nameTimeSplit = new String[2];
+
+        // putting things in nameTimeSplit
+
+
+        String lastPersonName = pplName.get(0);
+        ArrayList<Double> condensedTimeArr = new ArrayList<Double>();
+        double condensedTime = 0.0;
+
+
+
+        // add to condensedTimeArr
+        for (int i = 0; i < nameTimeSplit.length; i++) {
+            if (nameTimeSplit[1].contains(" ")){
+                nameTimeSplit[1] = nameTimeSplit[1].replace(" ", "");
+            }
+
+
+            condensedTimeArr.add(Double.parseDouble(nameTimeSplit[1]));
+        }
+
+        ArrayList<String> finalPersonTime = new ArrayList<>();
+
+
+        for (int i = 0; i < condensedTranscriptArr.length; i++) {
+            condensedTranscriptArr[i] = condensedTranscriptArr[i].replace(" sec", "");
+            nameTimeSplit = condensedTranscriptArr[i].split(": ");
+            if (nameTimeSplit[0].equals(lastPersonName)){
+                condensedTime += condensedTimeArr.get(i);
+            } else {
+                finalPersonTime.add(lastPersonName + ": " + condensedTime + " sec");
+                condensedTime = 0.0;
+                lastPersonName = nameTimeSplit[0];
+            }
+        }
+
+        String moreCondensedTranscriptText = "";
+
+        for (int i = 0; i < finalPersonTime.size(); i++) {
+            moreCondensedTranscriptText += finalPersonTime.get(i) + "\n";
+        }
+
+        StringToFile moreCondensedTranscriptFile = new StringToFile( "C:\\Users\\ethan\\IdeaProjects\\zoom parse v2\\src\\Files\\condensedTranscript.txt", moreCondensedTranscriptText);
